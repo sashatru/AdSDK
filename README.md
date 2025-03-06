@@ -15,9 +15,9 @@ It provides a clean and scalable architecture to support multiple ad providers i
 ## 📥 Installation (Using JitPack)
 To integrate AdSDK into your project, follow these steps:
 
-### **1️⃣ Add JitPack Repository**
+1️⃣ Add JitPack Repository
 In your **`settings.gradle.kts`**, add:
-```kotlin
+
 dependencyResolutionManagement {
     repositories {
         google()
@@ -38,31 +38,32 @@ After adding the dependency, sync Gradle files.
 3️⃣ Sync the Project
 After adding the dependency, sync Gradle files.
 
-📖 Usage Guide
+## 📖 Usage Guide
+
 1️⃣ Initialize the SDK
 Call AdManager in your Application class or Activity:
-
 val adManager = AdManager(context)
+
 2️⃣ Load and Show Interstitial Ads
 adManager.loadInterstitialAd()
-
 // Show the ad when needed
 adManager.showInterstitialAd()
+
 3️⃣ Load Native Ads
 adManager.loadNativeAd()
 
-🛠 Requirements
+## 🛠 Requirements
 Min SDK: 29
 Target SDK: 35
 Kotlin 1.9+
 AndroidX & Jetpack Compose
 
-🏗 Future Enhancements
+## 🏗 Future Enhancements
 🔹 Support for multiple ad providers (AppLovin, RTB, etc.)
 🔹 Ad analytics tracking (impressions, clicks)
 🔹 Banner and Rewarded Ads integration
 
-💡 Contribution
+## 💡 Contribution
 Feel free to open issues and contribute to this project!
 
 🔗 Created by sashatru 🚀
