@@ -3,7 +3,7 @@ package com.example.adsdk
 import android.content.Context
 import com.example.adsdk.data.sources.AdMobProvider
 
-class AdManager(context: Context) {
+open class AdManager(context: Context) {
     private val adProvider: AdProvider = AdMobProvider(context)
 
     fun getInterstitialAdState() = adProvider.interstitialAdState
