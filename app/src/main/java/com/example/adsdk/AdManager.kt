@@ -6,18 +6,19 @@ import com.example.adsdk.data.sources.AdMobProvider
 open class AdManager(context: Context) {
     private val adProvider: AdProvider = AdMobProvider(context)
 
-    fun getInterstitialAdState() = adProvider.interstitialAdState
-    fun getNativeAdState() = adProvider.nativeAdState
+    open fun getInterstitialAdState() = adProvider.interstitialAdState
 
-    fun loadInterstitialAd() {
+    open fun getNativeAdState() = adProvider.nativeAdState
+
+    open fun loadInterstitialAd() {
         adProvider.loadInterstitialAd()
     }
 
-    fun showInterstitialAd() {
+    open fun showInterstitialAd() {
         adProvider.showInterstitialAd()
     }
 
-    fun loadNativeAd() {
+    open fun loadNativeAd() {
         adProvider.loadNativeAd()
     }
 }
