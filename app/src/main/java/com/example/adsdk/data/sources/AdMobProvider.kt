@@ -2,12 +2,12 @@ package com.example.adsdk.data.sources
 
 import android.app.Activity
 import android.content.Context
+import android.util.Log
+import com.example.adsdk.domain.models.AdState
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.gms.ads.nativead.NativeAd
-import com.example.adsdk.AdProvider
-import com.example.adsdk.AdState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -28,6 +28,8 @@ class AdMobProvider(private val context: Context) : AdProvider {
     }
 
     override fun loadInterstitialAd() {
+        Log.d("BugFix", "AdMobProvider loadInterstitialAd")
+
         InterstitialAd.load(
             context,
             "ca-app-pub-3940256099942544/1033173712", // Test ID
@@ -35,25 +37,35 @@ class AdMobProvider(private val context: Context) : AdProvider {
             object : InterstitialAdLoadCallback() {
                 override fun onAdLoaded(ad: InterstitialAd) {
                     interstitialAd = ad
-                    _interstitialAdState.value = AdState.Loaded(ad)
+                    _interstitialAdState.value = AdState.InterstitialLoaded(ad)
+                    Log.d("BugFix", "AdMobProvider onAdLoaded")
+                    activityForShowAd?.let {showInterstitialAd(it)}
                 }
 
                 override fun onAdFailedToLoad(error: LoadAdError) {
                     _interstitialAdState.value = AdState.Failed(error.message)
+                    Log.e("BugFix", "AdMobProvider onAdFailedToLoad error: ${error.message}")
                 }
             }
         )
     }
 
-    override fun showInterstitialAd() {
-        (context as? Activity)?.let { interstitialAd?.show(it) }
+    private var activityForShowAd: Activity? = null
+
+    override fun showInterstitialAd(activity: Activity) {
+        activityForShowAd = activity
+        interstitialAd?.let {
+            Log.d("BugFix", "Showing Interstitial Ad: $it")
+            it.show(activity)
+        } ?: Log.d("BugFix", "Interstitial Ad not ready")
     }
+
 
     override fun loadNativeAd() {
         val adLoader = AdLoader.Builder(context, "ca-app-pub-3940256099942544/2247696110") // Test ID
             .forNativeAd { ad ->
                 nativeAd = ad
-                _nativeAdState.value = AdState.Loaded(ad)
+                _nativeAdState.value = AdState.NativeAdLoaded(ad)
             }
             .build()
 
