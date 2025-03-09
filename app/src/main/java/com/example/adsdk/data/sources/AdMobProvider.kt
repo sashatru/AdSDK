@@ -3,6 +3,7 @@ package com.example.adsdk.data.sources
 import android.app.Activity
 import android.content.Context
 import android.util.Log
+import com.example.adsdk.BuildConfig
 import com.example.adsdk.domain.models.AdState
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
@@ -10,6 +11,7 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.gms.ads.nativead.NativeAd
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+
 
 class AdMobProvider(private val context: Context) : AdProvider {
     private val _interstitialAdState = MutableStateFlow<AdState>(AdState.Loading)
@@ -32,7 +34,7 @@ class AdMobProvider(private val context: Context) : AdProvider {
 
         InterstitialAd.load(
             context,
-            "ca-app-pub-3940256099942544/1033173712", // Test ID
+            BuildConfig.INTERSTITIAL_AD_ID, // Test ID
             AdRequest.Builder().build(),
             object : InterstitialAdLoadCallback() {
                 override fun onAdLoaded(ad: InterstitialAd) {
@@ -62,7 +64,7 @@ class AdMobProvider(private val context: Context) : AdProvider {
 
 
     override fun loadNativeAd() {
-        val adLoader = AdLoader.Builder(context, "ca-app-pub-3940256099942544/2247696110") // Test ID
+        val adLoader = AdLoader.Builder(context, BuildConfig.NATIVE_AD_ID) // Test ID
             .forNativeAd { ad ->
                 nativeAd = ad
                 _nativeAdState.value = AdState.NativeAdLoaded(ad)

@@ -7,9 +7,16 @@ android {
     namespace = "com.example.adsdk"
     compileSdk = 35
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
         minSdk = 29
         testOptions.targetSdk = 35
+
+        buildConfigField("String", "INTERSTITIAL_AD_ID", "\"ca-app-pub-3940256099942544/1033173712\"") // Test ID
+        buildConfigField("String", "NATIVE_AD_ID", "\"ca-app-pub-3940256099942544/2247696110\"") // Test ID
     }
 
     buildTypes {
